@@ -1,5 +1,6 @@
 import 'package:dssstudentfe/ViewModels/ai_viewmodel.dart';
 import 'package:dssstudentfe/pages/components/main_layout.dart';
+import 'package:dssstudentfe/pages/components/animated_helpers.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
@@ -127,12 +128,14 @@ class _AiPredictionPageState extends State<AiPredictionPage> {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 // Header
-                Container(
+                FadeSlideIn(
+                  delay: 0,
+                  child: Container(
                   width: double.infinity,
                   padding: const EdgeInsets.all(24),
                   decoration: BoxDecoration(
                     gradient: const LinearGradient(
-                      colors: [Color(0xFF1E3A5F), Color(0xFF3B82F6)],
+                      colors: [Color(0xFF0F172A), Color(0xFF1E3A5F), Color(0xFF3B82F6)],
                     ),
                     borderRadius: BorderRadius.circular(16),
                     boxShadow: [
@@ -180,11 +183,14 @@ class _AiPredictionPageState extends State<AiPredictionPage> {
                     ],
                   ),
                 ),
+                ),
 
                 const SizedBox(height: 24),
 
                 // Input form
-                Container(
+                FadeSlideIn(
+                  delay: 150,
+                  child: Container(
                   padding: const EdgeInsets.all(24),
                   decoration: BoxDecoration(
                     color: Colors.white,
@@ -270,6 +276,7 @@ class _AiPredictionPageState extends State<AiPredictionPage> {
                       ),
                     ],
                   ),
+                ),
                 ),
 
                 // Error
@@ -476,7 +483,9 @@ class _AiPredictionPageState extends State<AiPredictionPage> {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         // DT Pass/Fail card
-        Container(
+        FadeSlideIn(
+          delay: 0,
+          child: Container(
           width: double.infinity,
           padding: const EdgeInsets.all(24),
           decoration: BoxDecoration(
@@ -502,11 +511,15 @@ class _AiPredictionPageState extends State<AiPredictionPage> {
             ],
           ),
         ),
+        ),
 
         const SizedBox(height: 16),
 
         // P(Rớt) score card
-        _buildScoreCard("📊 P(Rớt) – Xác suất rớt từ Decision Tree", p.pFail, Colors.blue),
+        FadeSlideIn(
+          delay: 100,
+          child: _buildScoreCard("📊 P(Rớt) – Xác suất rớt từ Decision Tree", p.pFail, Colors.blue),
+        ),
 
         const SizedBox(height: 16),
 

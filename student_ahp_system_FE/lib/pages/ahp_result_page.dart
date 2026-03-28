@@ -1,4 +1,5 @@
 import 'package:dssstudentfe/pages/evaluate_criteria_page.dart';
+import 'package:dssstudentfe/pages/components/animated_helpers.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
@@ -125,9 +126,19 @@ class AhpResultPage extends StatelessWidget {
                       ),
                       const SizedBox(height: 20),
 
-                      ...weights.entries.map((entry) {
+                      ...weights.entries.toList().asMap().entries.map((mapEntry) {
+                        final index = mapEntry.key;
+                        final entry = mapEntry.value;
                         double percent = entry.value * 100;
-                        return Column(
+                        final colors = [
+                          const Color(0xFF3B82F6),
+                          const Color(0xFFF59E0B),
+                          const Color(0xFF22C55E),
+                        ];
+                        final barColor = colors[index % colors.length];
+                        return FadeSlideIn(
+                          delay: 200 + index * 150,
+                          child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             Row(
@@ -136,21 +147,18 @@ class AhpResultPage extends StatelessWidget {
                                 Text(entry.key, style: GoogleFonts.inter(fontWeight: FontWeight.w500)),
                                 Text("${percent.toStringAsFixed(0)}%",
                                   style: GoogleFonts.inter(
-                                    color: const Color(0xFF3B82F6),
+                                    color: barColor,
                                     fontWeight: FontWeight.w700,
                                   ),
                                 ),
                               ],
                             ),
                             const SizedBox(height: 8),
-                            ClipRRect(
-                              borderRadius: BorderRadius.circular(6),
-                              child: LinearProgressIndicator(
-                                value: entry.value,
-                                minHeight: 10,
-                                backgroundColor: const Color(0xFFE2E8F0),
-                                color: const Color(0xFF3B82F6),
-                              ),
+                            AnimatedProgressBar(
+                              value: entry.value,
+                              color: barColor,
+                              height: 12,
+                              duration: Duration(milliseconds: 800 + index * 200),
                             ),
                             const SizedBox(height: 4),
                             Text(
@@ -159,6 +167,7 @@ class AhpResultPage extends StatelessWidget {
                             ),
                             const SizedBox(height: 16),
                           ],
+                        ),
                         );
                       }),
                     ],

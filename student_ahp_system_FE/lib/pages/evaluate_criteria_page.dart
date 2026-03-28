@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 import '../ViewModels/ahp_viewmodel.dart';
+import '../pages/components/animated_helpers.dart';
 import 'final_result_page.dart';
 
 class EvaluateCriteriaPage extends StatefulWidget {
@@ -322,22 +323,31 @@ class _EvaluateCriteriaPageState extends State<EvaluateCriteriaPage> {
 
                 SizedBox(height:20),
 
-                compareCard(
+                FadeSlideIn(
+                  delay: 100,
+                  child: compareCard(
                     "${alternatives[0]} vs ${alternatives[1]}",
                     a1a2,
                         (v)=>setState(()=>a1a2=v!)
                 ),
+                ),
 
-                compareCard(
+                FadeSlideIn(
+                  delay: 220,
+                  child: compareCard(
                     "${alternatives[0]} vs ${alternatives[2]}",
                     a1a3,
                         (v)=>setState(()=>a1a3=v!)
                 ),
+                ),
 
-                compareCard(
+                FadeSlideIn(
+                  delay: 340,
+                  child: compareCard(
                     "${alternatives[1]} vs ${alternatives[2]}",
                     a2a3,
                         (v)=>setState(()=>a2a3=v!)
+                ),
                 ),
 
                 SizedBox(height:24),

@@ -1,5 +1,6 @@
 import 'package:dssstudentfe/ViewModels/ahp_viewmodel.dart';
 import 'package:dssstudentfe/pages/ahp_result_page.dart';
+import 'package:dssstudentfe/pages/components/animated_helpers.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
@@ -118,11 +119,15 @@ class _AhpComparisonPageState extends State<AhpComparisonPage> {
 
                 /// PAIRS
                 Column(
-                  children: pairs.map((pair) {
+                  children: pairs.asMap().entries.map((entry) {
+                    final index = entry.key;
+                    final pair = entry.value;
 
                     String key = pair["key"]!;
 
-                    return Container(
+                    return FadeSlideIn(
+                      delay: 100 + index * 120,
+                      child: Container(
                       margin: const EdgeInsets.only(bottom: 14),
                       padding: const EdgeInsets.all(16),
 
@@ -180,13 +185,15 @@ class _AhpComparisonPageState extends State<AhpComparisonPage> {
                           )
                         ],
                       ),
+                    ),
                     );
 
                   }).toList(),
                 ),
 
-                SizedBox(height: 20),
-                Container(
+                FadeSlideIn(
+                  delay: 500,
+                  child: Container(
                   padding: const EdgeInsets.all(16),
 
                   decoration: BoxDecoration(
@@ -224,6 +231,7 @@ class _AhpComparisonPageState extends State<AhpComparisonPage> {
                       )),
                     ],
                   ),
+                ),
                 ),
 
                 SizedBox(height: 24),

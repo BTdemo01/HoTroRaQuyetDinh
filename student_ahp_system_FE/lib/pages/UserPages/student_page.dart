@@ -5,6 +5,7 @@ import 'package:dssstudentfe/ViewModels/score_viewmodel.dart';
 import 'package:dssstudentfe/ViewModels/student_viewmodel.dart';
 import 'package:dssstudentfe/pages/UserPages/student_edit_page.dart';
 import 'package:dssstudentfe/pages/components/main_layout.dart';
+import 'package:dssstudentfe/pages/components/animated_helpers.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -58,7 +59,9 @@ class _StudentPageState extends State<StudentPage> {
                 children: [
 
                   /// SEARCH + ADD
-                  Row(
+                  FadeSlideIn(
+                    delay: 0,
+                    child: Row(
                     children: [
 
                       Expanded(
@@ -167,12 +170,15 @@ class _StudentPageState extends State<StudentPage> {
                       )
                     ],
                   ),
+                  ),
 
                   const SizedBox(height: 20),
 
                   /// TABLE
                   Expanded(
-                    child: Container(
+                    child: FadeSlideIn(
+                      delay: 150,
+                      child: Container(
 
                       decoration: BoxDecoration(
                         color: Colors.white,
@@ -354,9 +360,9 @@ class _StudentPageState extends State<StudentPage> {
                         ),
                       ),
                       ),
-
                     ),
-                  )
+                    ),
+                  ),
 
                 ],
               ),

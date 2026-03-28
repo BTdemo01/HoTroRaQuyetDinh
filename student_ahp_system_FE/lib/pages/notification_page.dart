@@ -3,6 +3,7 @@ import 'package:dssstudentfe/ViewModels/risk_viewmodel.dart';
 import 'package:dssstudentfe/ViewModels/score_viewmodel.dart';
 import 'package:dssstudentfe/ViewModels/student_viewmodel.dart';
 import 'package:dssstudentfe/pages/components/main_layout.dart';
+import 'package:dssstudentfe/pages/components/animated_helpers.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -330,14 +331,23 @@ class _NotificationPageState extends State<NotificationPage> {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 // Header
-                Container(
+                FadeSlideIn(
+                  delay: 0,
+                  child: Container(
                   width: double.infinity,
                   padding: const EdgeInsets.all(20),
                   decoration: BoxDecoration(
-                    gradient: LinearGradient(
-                      colors: [Colors.orange.shade700, Colors.red.shade400],
+                    gradient: const LinearGradient(
+                      colors: [Color(0xFFEA580C), Color(0xFFEF4444)],
                     ),
-                    borderRadius: BorderRadius.circular(12),
+                    borderRadius: BorderRadius.circular(16),
+                    boxShadow: [
+                      BoxShadow(
+                        color: const Color(0xFFEF4444).withValues(alpha: 0.3),
+                        blurRadius: 16,
+                        offset: const Offset(0, 6),
+                      ),
+                    ],
                   ),
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
@@ -364,11 +374,14 @@ class _NotificationPageState extends State<NotificationPage> {
                     ],
                   ),
                 ),
+                ),
 
                 const SizedBox(height: 24),
 
                 // Actions bar
-                Container(
+                FadeSlideIn(
+                  delay: 150,
+                  child: Container(
                   padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
                   decoration: BoxDecoration(
                     color: Colors.white,
@@ -421,6 +434,7 @@ class _NotificationPageState extends State<NotificationPage> {
                     ],
                   ),
                 ),
+                ),
 
                 const SizedBox(height: 16),
 
@@ -445,7 +459,10 @@ class _NotificationPageState extends State<NotificationPage> {
                     ),
                   )
                 else
-                  ...warningStudents.map((s) => _buildStudentWarningCard(s)),
+                  ...warningStudents.asMap().entries.map((entry) => FadeSlideIn(
+                    delay: 300 + entry.key * 80,
+                    child: _buildStudentWarningCard(entry.value),
+                  )),
               ],
             ),
           );

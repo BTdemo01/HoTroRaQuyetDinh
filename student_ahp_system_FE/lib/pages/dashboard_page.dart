@@ -1,6 +1,7 @@
 import 'package:dssstudentfe/ViewModels/risk_viewmodel.dart';
 import 'package:dssstudentfe/ViewModels/student_viewmodel.dart';
 import 'package:dssstudentfe/pages/components/main_layout.dart';
+import 'package:dssstudentfe/pages/components/animated_helpers.dart';
 import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -51,21 +52,23 @@ class _DashboardPageState extends State<DashboardPage> {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 // Welcome header
-                Container(
+                FadeSlideIn(
+                  delay: 0,
+                  child: Container(
                   width: double.infinity,
                   padding: const EdgeInsets.all(28),
                   decoration: BoxDecoration(
                     gradient: const LinearGradient(
-                      colors: [Color(0xFF1E3A5F), Color(0xFF3B82F6)],
+                      colors: [Color(0xFF0F172A), Color(0xFF1E3A5F), Color(0xFF3B82F6)],
                       begin: Alignment.topLeft,
                       end: Alignment.bottomRight,
                     ),
                     borderRadius: BorderRadius.circular(20),
                     boxShadow: [
                       BoxShadow(
-                        color: const Color(0xFF3B82F6).withValues(alpha: 0.3),
-                        blurRadius: 20,
-                        offset: const Offset(0, 8),
+                        color: const Color(0xFF1E3A5F).withValues(alpha: 0.4),
+                        blurRadius: 24,
+                        offset: const Offset(0, 10),
                       ),
                     ],
                   ),
@@ -122,6 +125,7 @@ class _DashboardPageState extends State<DashboardPage> {
                     ],
                   ),
                 ),
+                ),
 
                 const SizedBox(height: 24),
 
@@ -129,31 +133,35 @@ class _DashboardPageState extends State<DashboardPage> {
                 Row(
                   children: [
                     _buildSummaryCard(
-                      icon: Icons.people,
+                      icon: Icons.people_rounded,
                       label: "Tổng sinh viên",
                       value: total,
-                      color: Colors.blue,
+                      color: const Color(0xFF3B82F6),
+                      delay: 100,
                     ),
                     const SizedBox(width: 16),
                     _buildSummaryCard(
-                      icon: Icons.check_circle,
+                      icon: Icons.check_circle_rounded,
                       label: "Rủi ro thấp",
                       value: low,
-                      color: Colors.green,
+                      color: const Color(0xFF22C55E),
+                      delay: 200,
                     ),
                     const SizedBox(width: 16),
                     _buildSummaryCard(
-                      icon: Icons.warning_amber,
+                      icon: Icons.warning_amber_rounded,
                       label: "Rủi ro TB",
                       value: medium,
-                      color: Colors.orange,
+                      color: const Color(0xFFF59E0B),
+                      delay: 300,
                     ),
                     const SizedBox(width: 16),
                     _buildSummaryCard(
-                      icon: Icons.dangerous,
+                      icon: Icons.dangerous_rounded,
                       label: "Rủi ro cao",
                       value: high,
-                      color: Colors.red,
+                      color: const Color(0xFFEF4444),
+                      delay: 400,
                     ),
                   ],
                 ),
@@ -161,9 +169,11 @@ class _DashboardPageState extends State<DashboardPage> {
                 const SizedBox(height: 24),
 
                 // Charts row
-                Row(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
+                FadeSlideIn(
+                  delay: 500,
+                  child: Row(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
                     // Pie chart
                     Expanded(
                       flex: 1,
@@ -176,37 +186,38 @@ class _DashboardPageState extends State<DashboardPage> {
                                   PieChartData(
                                     sectionsSpace: 3,
                                     centerSpaceRadius: 50,
+                                    pieTouchData: PieTouchData(enabled: true),
                                     sections: [
                                       PieChartSectionData(
                                         value: low.toDouble(),
                                         title: low > 0 ? "Low\n$low" : "",
-                                        color: Colors.green.shade400,
-                                        radius: 60,
-                                        titleStyle: const TextStyle(
+                                        color: const Color(0xFF22C55E),
+                                        radius: 65,
+                                        titleStyle: GoogleFonts.inter(
                                           color: Colors.white,
-                                          fontWeight: FontWeight.bold,
+                                          fontWeight: FontWeight.w700,
                                           fontSize: 12,
                                         ),
                                       ),
                                       PieChartSectionData(
                                         value: medium.toDouble(),
                                         title: medium > 0 ? "Med\n$medium" : "",
-                                        color: Colors.orange.shade400,
-                                        radius: 60,
-                                        titleStyle: const TextStyle(
+                                        color: const Color(0xFFF59E0B),
+                                        radius: 65,
+                                        titleStyle: GoogleFonts.inter(
                                           color: Colors.white,
-                                          fontWeight: FontWeight.bold,
+                                          fontWeight: FontWeight.w700,
                                           fontSize: 12,
                                         ),
                                       ),
                                       PieChartSectionData(
                                         value: high.toDouble(),
                                         title: high > 0 ? "High\n$high" : "",
-                                        color: Colors.red.shade400,
-                                        radius: 60,
-                                        titleStyle: const TextStyle(
+                                        color: const Color(0xFFEF4444),
+                                        radius: 65,
+                                        titleStyle: GoogleFonts.inter(
                                           color: Colors.white,
-                                          fontWeight: FontWeight.bold,
+                                          fontWeight: FontWeight.w700,
                                           fontSize: 12,
                                         ),
                                       ),
@@ -289,7 +300,7 @@ class _DashboardPageState extends State<DashboardPage> {
                                 BarChartGroupData(x: 0, barRods: [
                                   BarChartRodData(
                                     toY: low.toDouble(),
-                                    color: Colors.green.shade400,
+                                    color: const Color(0xFF22C55E),
                                     width: 40,
                                     borderRadius: const BorderRadius.vertical(top: Radius.circular(8)),
                                   ),
@@ -297,7 +308,7 @@ class _DashboardPageState extends State<DashboardPage> {
                                 BarChartGroupData(x: 1, barRods: [
                                   BarChartRodData(
                                     toY: medium.toDouble(),
-                                    color: Colors.orange.shade400,
+                                    color: const Color(0xFFF59E0B),
                                     width: 40,
                                     borderRadius: const BorderRadius.vertical(top: Radius.circular(8)),
                                   ),
@@ -305,7 +316,7 @@ class _DashboardPageState extends State<DashboardPage> {
                                 BarChartGroupData(x: 2, barRods: [
                                   BarChartRodData(
                                     toY: high.toDouble(),
-                                    color: Colors.red.shade400,
+                                    color: const Color(0xFFEF4444),
                                     width: 40,
                                     borderRadius: const BorderRadius.vertical(top: Radius.circular(8)),
                                   ),
@@ -318,68 +329,124 @@ class _DashboardPageState extends State<DashboardPage> {
                     ),
                   ],
                 ),
+                ),
 
                 const SizedBox(height: 24),
 
                 // Top risk students table
-                _buildChartCard(
+                FadeSlideIn(
+                  delay: 600,
+                  child: _buildChartCard(
                   title: "🔴 Sinh viên nguy cơ cao nhất",
                   child: riskVm.topRisk.isNotEmpty
-                      ? DataTable(
-                          headingRowColor: WidgetStateProperty.all(const Color(0xFFFEF2F2)),
-                          columnSpacing: 28,
-                          columns: const [
-                            DataColumn(label: Text("STT", style: TextStyle(fontWeight: FontWeight.bold))),
-                            DataColumn(label: Text("Mã SV", style: TextStyle(fontWeight: FontWeight.bold))),
-                            DataColumn(label: Text("Họ tên", style: TextStyle(fontWeight: FontWeight.bold))),
-                            DataColumn(label: Text("Lớp", style: TextStyle(fontWeight: FontWeight.bold))),
-                            DataColumn(label: Text("Risk Score", style: TextStyle(fontWeight: FontWeight.bold))),
-                            DataColumn(label: Text("Mức rủi ro", style: TextStyle(fontWeight: FontWeight.bold))),
-                          ],
-                          rows: List.generate(riskVm.topRisk.length, (i) {
-                            final risk = riskVm.topRisk[i];
-                            final student = studentVm.students.where((s) => s.id == risk.studentId).firstOrNull;
-                            final isHigh = risk.riskLevel == "High Risk";
-
-                            return DataRow(
-                              color: WidgetStateProperty.all(
-                                i % 2 == 0 ? Colors.white : Colors.grey.shade50,
+                      ? ClipRRect(
+                          borderRadius: BorderRadius.circular(12),
+                          child: Table(
+                            columnWidths: const {
+                              0: FixedColumnWidth(60),
+                              1: FlexColumnWidth(1.2),
+                              2: FlexColumnWidth(2),
+                              3: FlexColumnWidth(1.2),
+                              4: FlexColumnWidth(1.2),
+                              5: FlexColumnWidth(1.4),
+                            },
+                            defaultVerticalAlignment: TableCellVerticalAlignment.middle,
+                            border: TableBorder(
+                              horizontalInside: BorderSide(color: Colors.grey.shade200, width: 1),
+                            ),
+                            children: [
+                              // Header row
+                              TableRow(
+                                decoration: const BoxDecoration(
+                                  gradient: LinearGradient(
+                                    colors: [Color(0xFF1E293B), Color(0xFF334155)],
+                                  ),
+                                ),
+                                children: [
+                                  for (final h in ["STT", "Mã SV", "Họ tên", "Lớp", "Risk Score", "Mức rủi ro"])
+                                    Padding(
+                                      padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 14),
+                                      child: Text(h, style: GoogleFonts.inter(color: Colors.white, fontWeight: FontWeight.w600, fontSize: 13)),
+                                    ),
+                                ],
                               ),
-                              cells: [
-                                DataCell(Text("${i + 1}")),
-                                DataCell(Text(student?.studentCode ?? "-")),
-                                DataCell(Text(student?.name ?? "SV #${risk.studentId}")),
-                                DataCell(Text(student?.className ?? "-")),
-                                DataCell(
-                                  Text(
-                                    risk.riskScore.toStringAsFixed(2),
-                                    style: TextStyle(
-                                      fontWeight: FontWeight.bold,
-                                      color: isHigh ? Colors.red : Colors.orange,
-                                    ),
+                              // Data rows
+                              ...List.generate(riskVm.topRisk.length, (i) {
+                                final risk = riskVm.topRisk[i];
+                                final student = studentVm.students.where((s) => s.id == risk.studentId).firstOrNull;
+                                final isHigh = risk.riskLevel == "High Risk";
+
+                                return TableRow(
+                                  decoration: BoxDecoration(
+                                    color: i % 2 == 0 ? Colors.white : const Color(0xFFF8FAFC),
                                   ),
-                                ),
-                                DataCell(
-                                  Container(
-                                    padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 4),
-                                    decoration: BoxDecoration(
-                                      color: isHigh ? Colors.red : Colors.orange,
-                                      borderRadius: BorderRadius.circular(12),
+                                  children: [
+                                    Padding(
+                                      padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 14),
+                                      child: Text("${i + 1}", style: GoogleFonts.inter(fontSize: 13, color: const Color(0xFF64748B))),
                                     ),
-                                    child: Text(
-                                      risk.riskLevel,
-                                      style: const TextStyle(color: Colors.white, fontSize: 12, fontWeight: FontWeight.bold),
+                                    Padding(
+                                      padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 14),
+                                      child: Text(student?.studentCode ?? "-", style: GoogleFonts.inter(fontSize: 13, fontWeight: FontWeight.w600)),
                                     ),
-                                  ),
-                                ),
-                              ],
-                            );
-                          }),
+                                    Padding(
+                                      padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 14),
+                                      child: Text(student?.name ?? "SV #${risk.studentId}", style: GoogleFonts.inter(fontSize: 13)),
+                                    ),
+                                    Padding(
+                                      padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 14),
+                                      child: Text(student?.className ?? "-", style: GoogleFonts.inter(fontSize: 13, color: const Color(0xFF64748B))),
+                                    ),
+                                    Padding(
+                                      padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 14),
+                                      child: Text(
+                                        risk.riskScore.toStringAsFixed(2),
+                                        style: GoogleFonts.inter(
+                                          fontWeight: FontWeight.w700,
+                                          fontSize: 14,
+                                          color: isHigh ? const Color(0xFFEF4444) : const Color(0xFFF59E0B),
+                                        ),
+                                      ),
+                                    ),
+                                    Padding(
+                                      padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 10),
+                                      child: Align(
+                                        alignment: Alignment.centerLeft,
+                                        child: Container(
+                                          padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 5),
+                                          decoration: BoxDecoration(
+                                            gradient: LinearGradient(
+                                              colors: isHigh
+                                                  ? [const Color(0xFFEF4444), const Color(0xFFDC2626)]
+                                                  : [const Color(0xFFF59E0B), const Color(0xFFD97706)],
+                                            ),
+                                            borderRadius: BorderRadius.circular(20),
+                                            boxShadow: [
+                                              BoxShadow(
+                                                color: (isHigh ? const Color(0xFFEF4444) : const Color(0xFFF59E0B)).withValues(alpha: 0.3),
+                                                blurRadius: 6,
+                                                offset: const Offset(0, 2),
+                                              ),
+                                            ],
+                                          ),
+                                          child: Text(
+                                            risk.riskLevel,
+                                            style: GoogleFonts.inter(color: Colors.white, fontSize: 12, fontWeight: FontWeight.w600),
+                                          ),
+                                        ),
+                                      ),
+                                    ),
+                                  ],
+                                );
+                              }),
+                            ],
+                          ),
                         )
                       : const Padding(
                           padding: EdgeInsets.all(20),
                           child: Text("Chưa có dữ liệu top risk. Hãy tính AHP trước."),
                         ),
+                ),
                 ),
               ],
             ),
@@ -394,62 +461,69 @@ class _DashboardPageState extends State<DashboardPage> {
     required String label,
     required int value,
     required Color color,
+    int delay = 0,
   }) {
     return Expanded(
-      child: Container(
-        padding: const EdgeInsets.all(22),
-        decoration: BoxDecoration(
-          color: Colors.white,
-          borderRadius: BorderRadius.circular(16),
-          boxShadow: [
-            BoxShadow(color: Colors.black.withValues(alpha: 0.04), blurRadius: 12, offset: const Offset(0, 4)),
-          ],
-        ),
-        child: Row(
-          children: [
-            Container(
-              padding: const EdgeInsets.all(12),
-              decoration: BoxDecoration(
-                color: color.withValues(alpha: 0.1),
-                borderRadius: BorderRadius.circular(14),
-              ),
-              child: Icon(icon, color: color, size: 26),
-            ),
-            const SizedBox(width: 16),
-            Expanded(
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(
-                    label,
-                    style: GoogleFonts.inter(
-                      color: const Color(0xFF94A3B8),
-                      fontSize: 12,
-                      fontWeight: FontWeight.w500,
+      child: FadeSlideIn(
+        delay: delay,
+        child: HoverCard(
+          child: Padding(
+            padding: const EdgeInsets.all(22),
+            child: Row(
+              children: [
+                Container(
+                  padding: const EdgeInsets.all(12),
+                  decoration: BoxDecoration(
+                    gradient: LinearGradient(
+                      colors: [color.withValues(alpha: 0.15), color.withValues(alpha: 0.05)],
+                      begin: Alignment.topLeft,
+                      end: Alignment.bottomRight,
                     ),
-                    overflow: TextOverflow.ellipsis,
+                    borderRadius: BorderRadius.circular(14),
                   ),
-                  const SizedBox(height: 6),
-                  Text(
-                    "$value",
-                    style: GoogleFonts.inter(
-                      fontSize: 28,
-                      fontWeight: FontWeight.w800,
-                      color: const Color(0xFF1E293B),
+                  child: Icon(icon, color: color, size: 26),
+                ),
+                const SizedBox(width: 16),
+                Expanded(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        label,
+                        style: GoogleFonts.inter(
+                          color: const Color(0xFF94A3B8),
+                          fontSize: 12,
+                          fontWeight: FontWeight.w500,
+                        ),
+                        overflow: TextOverflow.ellipsis,
+                      ),
+                      const SizedBox(height: 6),
+                      AnimatedCounter(
+                        value: value,
+                        style: GoogleFonts.inter(
+                          fontSize: 28,
+                          fontWeight: FontWeight.w800,
+                          color: const Color(0xFF1E293B),
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+                Container(
+                  width: 4,
+                  height: 40,
+                  decoration: BoxDecoration(
+                    gradient: LinearGradient(
+                      colors: [color, color.withValues(alpha: 0.3)],
+                      begin: Alignment.topCenter,
+                      end: Alignment.bottomCenter,
                     ),
+                    borderRadius: BorderRadius.circular(2),
                   ),
-                ],
-              ),
+                ),
+              ],
             ),
-            Container(
-              width: 4,
-              height: 40,
-              decoration: BoxDecoration(
-                color: color,
-                borderRadius: BorderRadius.circular(2),
-              ),
-            ),
-          ],
+          ),
         ),
       ),
     );

@@ -47,13 +47,35 @@ class MyApp extends StatelessWidget {
 
     return MaterialApp(
       initialRoute: "/dashboard",
-      routes: {
-        "/dashboard": (context) => DashboardPage(),
-        "/students": (context) => StudentPage(),
-        "/ahp": (context) => AhpCriteriaPage(),
-        "/ahp-report": (context) => AhpReportPage(),
-        "/ai-predict": (context) => const AiPredictionPage(),
-        "/notifications": (context) => const NotificationPage(),
+      onGenerateRoute: (settings) {
+        final routes = <String, WidgetBuilder>{
+          "/dashboard": (context) => DashboardPage(),
+          "/students": (context) => StudentPage(),
+          "/ahp": (context) => AhpCriteriaPage(),
+          "/ahp-report": (context) => AhpReportPage(),
+          "/ai-predict": (context) => const AiPredictionPage(),
+          "/notifications": (context) => const NotificationPage(),
+        };
+        final builder = routes[settings.name];
+        if (builder != null) {
+          return PageRouteBuilder(
+            settings: settings,
+            pageBuilder: (context, animation, secondaryAnimation) => builder(context),
+            transitionDuration: const Duration(milliseconds: 300),
+            reverseTransitionDuration: const Duration(milliseconds: 200),
+            transitionsBuilder: (context, animation, secondaryAnimation, child) {
+              final curve = CurvedAnimation(parent: animation, curve: Curves.easeOutCubic);
+              return FadeTransition(
+                opacity: curve,
+                child: SlideTransition(
+                  position: Tween<Offset>(begin: const Offset(0.02, 0), end: Offset.zero).animate(curve),
+                  child: child,
+                ),
+              );
+            },
+          );
+        }
+        return null;
       },
       title: 'DSS Cảnh Báo Sớm',
       debugShowCheckedModeBanner: false,

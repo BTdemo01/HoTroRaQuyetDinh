@@ -1,5 +1,6 @@
 import 'package:dssstudentfe/pages/ahp_comparison_page.dart';
 import 'package:dssstudentfe/pages/components/main_layout.dart';
+import 'package:dssstudentfe/pages/components/animated_helpers.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
@@ -73,7 +74,11 @@ class _AhpCriteriaPageState extends State<AhpCriteriaPage> {
                     const SizedBox(height: 12),
                     Column(
                       children: List.generate(criteria.length, (index) {
-                        return Container(
+                        return FadeSlideIn(
+                          delay: 100 + index * 120,
+                          child: HoverCard(
+                            scale: 1.015,
+                            child: Container(
                           margin: const EdgeInsets.only(bottom: 10),
                           padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 14),
                           decoration: BoxDecoration(
@@ -125,6 +130,8 @@ class _AhpCriteriaPageState extends State<AhpCriteriaPage> {
                               ),
                             ],
                           ),
+                          ),
+                        ),
                         );
                       }),
                     ),

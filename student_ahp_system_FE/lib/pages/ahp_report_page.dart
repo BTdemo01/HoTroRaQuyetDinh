@@ -1,6 +1,7 @@
 import 'package:dssstudentfe/Models/ahp_report.dart';
 import 'package:dssstudentfe/pages/components/main_layout.dart';
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 import '../ViewModels/ahp_viewmodel.dart';
 
@@ -389,30 +390,63 @@ class _AhpReportPageState extends State<AhpReportPage> {
   // ===== TITLE =====
   Widget _title(String text) {
     return Padding(
-      padding: const EdgeInsets.symmetric(vertical: 10),
-      child: Text(
-        text,
-        style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+      padding: const EdgeInsets.symmetric(vertical: 12),
+      child: Row(
+        children: [
+          Container(
+            width: 4,
+            height: 24,
+            decoration: BoxDecoration(
+              gradient: const LinearGradient(
+                colors: [Color(0xFF3B82F6), Color(0xFF6366F1)],
+                begin: Alignment.topCenter,
+                end: Alignment.bottomCenter,
+              ),
+              borderRadius: BorderRadius.circular(2),
+            ),
+          ),
+          const SizedBox(width: 12),
+          Text(
+            text,
+            style: GoogleFonts.inter(fontSize: 18, fontWeight: FontWeight.w700, color: const Color(0xFF0F172A)),
+          ),
+        ],
       ),
     );
   }
 
   // ===== BEST CARD =====
   Widget _bestCard(String best) {
-    return Card(
-      color: Colors.green.shade100,
-      child: Padding(
-        padding: const EdgeInsets.all(16),
-        child: Center(
-          child: Text(
+    return Container(
+      width: double.infinity,
+      padding: const EdgeInsets.all(20),
+      decoration: BoxDecoration(
+        gradient: const LinearGradient(
+          colors: [Color(0xFF22C55E), Color(0xFF16A34A)],
+        ),
+        borderRadius: BorderRadius.circular(16),
+        boxShadow: [
+          BoxShadow(
+            color: const Color(0xFF22C55E).withValues(alpha: 0.3),
+            blurRadius: 16,
+            offset: const Offset(0, 6),
+          ),
+        ],
+      ),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          const Icon(Icons.emoji_events_rounded, color: Colors.white, size: 28),
+          const SizedBox(width: 12),
+          Text(
             best,
-            style: TextStyle(
+            style: GoogleFonts.inter(
               fontSize: 20,
-              fontWeight: FontWeight.bold,
-              color: Colors.green.shade800,
+              fontWeight: FontWeight.w800,
+              color: Colors.white,
             ),
           ),
-        ),
+        ],
       ),
     );
   }
@@ -425,15 +459,24 @@ class _AhpReportPageState extends State<AhpReportPage> {
     return SingleChildScrollView(
       scrollDirection: Axis.horizontal,
       child: Table(
-        border: TableBorder.all(color: Colors.black54),
+        border: TableBorder.all(color: const Color(0xFFE2E8F0), width: 1),
         defaultColumnWidth: const FixedColumnWidth(170),
         children: [
           TableRow(
-            decoration: BoxDecoration(color: Colors.blue.shade800),
+            decoration: const BoxDecoration(
+              gradient: LinearGradient(
+                colors: [Color(0xFF1E3A5F), Color(0xFF3B82F6)],
+              ),
+            ),
             children: headers.map((h) => _cell(h, isHeader: true)).toList(),
           ),
-          ...data.map((row) {
+          ...data.asMap().entries.map((entry) {
+            final i = entry.key;
+            final row = entry.value;
             return TableRow(
+              decoration: BoxDecoration(
+                color: i % 2 == 0 ? Colors.white : const Color(0xFFF8FAFC),
+              ),
               children: row.map((cell) => _cell(cell.toString())).toList(),
             );
           }),
@@ -456,13 +499,14 @@ class _AhpReportPageState extends State<AhpReportPage> {
   // ===== CELL =====
   Widget _cell(String text, {bool isHeader = false}) {
     return Padding(
-      padding: const EdgeInsets.all(8),
+      padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 10),
       child: Text(
         text,
         textAlign: TextAlign.center,
-        style: TextStyle(
-          fontWeight: isHeader ? FontWeight.bold : FontWeight.normal,
-          color: isHeader ? Colors.white : Colors.black87,
+        style: GoogleFonts.inter(
+          fontWeight: isHeader ? FontWeight.w600 : FontWeight.w400,
+          color: isHeader ? Colors.white : const Color(0xFF334155),
+          fontSize: isHeader ? 13 : 13,
         ),
       ),
     );

@@ -2,6 +2,7 @@ import 'package:dssstudentfe/Models/student.dart';
 import 'package:dssstudentfe/ViewModels/risk_viewmodel.dart';
 import 'package:dssstudentfe/ViewModels/score_viewmodel.dart';
 import 'package:dssstudentfe/ViewModels/student_viewmodel.dart';
+import 'package:dssstudentfe/pages/components/animated_helpers.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
@@ -64,7 +65,9 @@ class _StudentEditPageState extends State<StudentEditPage> {
 
       body: Center(
         child: SingleChildScrollView(
-          child: Container(
+          child: FadeSlideIn(
+            delay: 0,
+            child: Container(
             width: 600,
             margin: const EdgeInsets.symmetric(vertical: 28),
             padding: const EdgeInsets.all(32),
@@ -390,6 +393,7 @@ class _StudentEditPageState extends State<StudentEditPage> {
           
               ],
             ),
+          ),
           ),
         ),
       ),
